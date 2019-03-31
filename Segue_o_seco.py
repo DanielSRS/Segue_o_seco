@@ -2,7 +2,7 @@
 #                                                 listando variavéis
 # ----------------------------------------------------------------------------------------------------------------------
 tipo_de_aparelho = 0
-nome_do_aparelho = 'ar condicionados'
+nome_do_aparelho = 'x'
 potencia_do_aparelho = 0.0
 horas_de_uso_por_dia_do_aparelho = 0.0
 dias_de_uso_do_aparelho_por_mes = 0.0
@@ -43,7 +43,7 @@ while mais_setores:
             nome_do_aparelho = 'televisores'
         # ______________________________________________________________________________________________________________
 
-        numero_de_aparelhos: int = int(input(
+        numero_de_aparelhos = int(input(
             '\n\nQuantos {} existem no {}° setor: '.format(nome_do_aparelho, contador_de_setores)))
         while contador_do_loop <= numero_de_aparelhos:
             potencia_do_aparelho = float(input('Digite a potẽncia do {}° aparelho: '.format(contador_do_loop)))
@@ -54,10 +54,9 @@ while mais_setores:
             consumo_do_aparelho = (
                 potencia_do_aparelho * horas_de_uso_por_dia_do_aparelho * dias_de_uso_do_aparelho_por_mes)
             consumo_do_setor = consumo_do_setor + consumo_do_aparelho
-            print(consumo_do_setor)
             contador_do_loop = contador_do_loop + 1
         tipo_de_aparelho = tipo_de_aparelho + 1
-        contador_do_loop = 1
+        contador_do_loop = 1 # Reseta o loop para uso com outro tipo de aparelho
     # __________________________________________________________________________________________________________________
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -70,23 +69,22 @@ while mais_setores:
         adicionar_setor = input('Digite sua escolha: ')
         if adicionar_setor == 'A':
             contador_de_setores = contador_de_setores + 1
-            adicionar_setor = 'x'  # Permite ao programa voltar a executar esse laço quando houver mais um setor
             tipo_de_aparelho = 0  # Permite ao programa executar novamente o primeiro laço de repetição
         elif adicionar_setor == 'B':
             mais_setores = False
         else:
             print('Opção inválida, digite novamente!\n\n')
+    adicionar_setor = 'x'  # Permite ao programa voltar a executar esse laço quando houver mais um setor
     # __________________________________________________________________________________________________________________
-    print('\n\n\nCheguei aqui!!!!')
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                      Definindo a taxa utilizada para os calculos
 # ----------------------------------------------------------------------------------------------------------------------
-if consumo_do_setor <= 50:
+if consumo_do_setor/1000 <= 50: # Consumo em KW
     taxa = 0.18842532
-elif 50 < consumo_do_setor <= 149.99:
+elif 50 < consumo_do_setor/1000 <= 149.99:
     taxa = 0.25776052
-elif consumo_do_setor >= 150:
+elif consumo_do_setor/1000 >= 150:
     taxa = 0.26557855
 # ______________________________________________________________________________________________________________________
 
