@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 # ----------------------------------------------------------------------------------------------------------------------
 #                                                 listando variavéis
 # ----------------------------------------------------------------------------------------------------------------------
@@ -18,6 +20,9 @@ gasto_geral_sem_impostos = 0.0
 gasto_geral_com_impostos = 0.0
 mais_setores = True
 taxa = 0.0
+setores = []
+setor_auxiliar = []
+aparelho_auxiliar = []
 # ______________________________________________________________________________________________________________________
 
 while mais_setores:
@@ -47,21 +52,27 @@ while mais_setores:
             '\n\nQuantos {} existem no {}° setor: '.format(nome_do_aparelho, contador_de_setores)))
         while contador_do_loop <= numero_de_aparelhos:
             potencia_do_aparelho = float(input('Digite a potẽncia do {}° aparelho: '.format(contador_do_loop)))
+            potencia_do_aparelho = potencia_do_aparelho/1000
             horas_de_uso_por_dia_do_aparelho = float(
                 input('Digite a quantidade de horas por dia de uso do {}° aparelho: '.format(contador_do_loop)))
             dias_de_uso_do_aparelho_por_mes = float(
                 input('Digite a quantidade de dias por mês de uso do {}° aparelho; '.format(contador_do_loop)))
             consumo_do_aparelho = (
                 potencia_do_aparelho * horas_de_uso_por_dia_do_aparelho * dias_de_uso_do_aparelho_por_mes)
-            consumo_do_setor = consumo_do_setor + consumo_do_aparelho
+            aparelho_auxiliar.append(consumo_do_aparelho)
+            consumo_do_setor = consumo_do_setor + consumo_do_aparelho  # ATENÇÂO
             contador_do_loop = contador_do_loop + 1
         tipo_de_aparelho = tipo_de_aparelho + 1
-        contador_do_loop = 1 # Reseta o loop para uso com outro tipo de aparelho
+        setor_auxiliar.append(deepcopy(aparelho_auxiliar))
+        aparelho_auxiliar[:] = []
+        contador_do_loop = 1  # Reseta o loop para uso com outro tipo de aparelho
     # __________________________________________________________________________________________________________________
 
     # ------------------------------------------------------------------------------------------------------------------
     #                                              Adiciona um novo setor
     # ------------------------------------------------------------------------------------------------------------------
+    setores.append(deepcopy(setor_auxiliar))
+    setor_auxiliar[:] = []
     while adicionar_setor != 'A' and adicionar_setor != 'B':
         print('----------------------| Deseja adicionar mais um setor? |----------------------\n\n')
         print('[A] - Para adicionar outro setor à contagem')
@@ -80,18 +91,18 @@ while mais_setores:
 # ----------------------------------------------------------------------------------------------------------------------
 #                                      Definindo a taxa utilizada para os calculos
 # ----------------------------------------------------------------------------------------------------------------------
-if consumo_do_setor/1000 <= 50: # Consumo em KW
-    if consumo_do_setor/1000 < 31:
+if consumo_do_setor <= 50:  # Consumo em KW
+    if consumo_do_setor < 31:
         taxa = 0.18842532
     else:
         taxa = 0.32301484
-elif 50 < consumo_do_setor/1000 <= 149.99:
+elif 50 < consumo_do_setor <= 149.99:
     if 50 < consumo_do_setor < 101:
         taxa = 0.44187518
     else:
         taxa = 0.25776052
-elif consumo_do_setor/1000 >= 150:
-    if consumo_do_setor/1000 > 220:
+elif consumo_do_setor >= 150:
+    if consumo_do_setor > 220:
         taxa = 0.75879587
     if 149.99 < consumo_do_setor <= 220:
         taxa = 0.26557855
@@ -100,10 +111,10 @@ elif consumo_do_setor/1000 >= 150:
 # ----------------------------------------------------------------------------------------------------------------------
 #                                          Realiza os calculos finais
 # ----------------------------------------------------------------------------------------------------------------------
-consumo_geral = consumo_do_setor/1000
+consumo_geral = consumo_do_setor
 gasto_geral_sem_impostos = consumo_geral * taxa
-gasto_geral_com_impostos = gasto_geral_sem_impostos * (27/100) + gasto_geral_sem_impostos * (1.65/100) + \
-    gasto_geral_sem_impostos * (7.61/100)  # ICMS  PIS COFINS
+gasto_geral_com_impostos = gasto_geral_sem_impostos + gasto_geral_sem_impostos * (27/100) + \
+    gasto_geral_sem_impostos * (1.65/100) + gasto_geral_sem_impostos * (7.61/100)  # ICMS  PIS COFINS
 # ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -113,4 +124,50 @@ print('\n\n\nConsumo geral: {} Kwh'.format(consumo_geral))
 print('Gasto geral: R$ {}'.format(gasto_geral_sem_impostos))
 print('Valor da conta: R$ {}'.format(gasto_geral_com_impostos))
 print('\n\n\n\n\t\t\t\t\tFim do programa')
+print('\n\n\n\n\t\t\t\t\t')
+print(setores)
+print('\n\n\n\n\t\t\t\t\t')
 # ______________________________________________________________________________________________________________________
+
+# ----------------------------------------------------------------------------------------------------------------------
+#                                       Calculo usando listas
+# ----------------------------------------------------------------------------------------------------------------------
+tamanho_lista_setores = len(setores)
+contado_lista_1 = 0
+gasto_aparelho = 0
+gasto_Setor = 0
+consumo_lista_setor = 0
+gasto_tipo_aparelho = 0
+gasto_geral_sem_impostos = 0
+consumo_tipo_aparelho = 0
+consumo_geral = 0
+
+while contado_lista_1 < tamanho_lista_setores:
+    droa = 0
+    while droa < 5:
+        tamanho_lista_aparelhos = len(setores[contado_lista_1][droa])
+        contado_lista_2 = 0
+        while contado_lista_2 < tamanho_lista_aparelhos:
+            gasto_aparelho = setores[contado_lista_1][droa][contado_lista_2] * taxa
+            print('\t\t\tconsumo: {} gasto {}'.format(setores[contado_lista_1][droa][contado_lista_2], gasto_aparelho))
+            gasto_tipo_aparelho += gasto_aparelho
+            consumo_tipo_aparelho += setores[contado_lista_1][droa][contado_lista_2]
+            contado_lista_2 += 1
+        print('tipo de aparelgo: consumo {} gasto: {}'.format(consumo_tipo_aparelho, gasto_tipo_aparelho))
+        gasto_Setor += gasto_tipo_aparelho
+        consumo_lista_setor += consumo_tipo_aparelho
+        gasto_tipo_aparelho = 0
+        consumo_tipo_aparelho = 0
+        droa += 1
+    print('******* por setor. consumo {} gasto {}'.format(consumo_lista_setor, gasto_Setor))
+    gasto_geral_sem_impostos += gasto_Setor
+    consumo_geral += consumo_lista_setor
+    contado_lista_1 += 1
+
+gasto_geral_com_impostos = gasto_geral_sem_impostos + gasto_geral_sem_impostos * (27/100) + \
+    gasto_geral_sem_impostos * (1.65/100) + gasto_geral_sem_impostos * (7.61/100)  # ICMS  PIS COFINS
+
+print('\n\n\n\n\n\n')
+print('Consumo geral: {}'.format(consumo_geral))
+print('Gasto geral sem impostos: {}'.format(gasto_geral_sem_impostos))
+print('Gasto geral com impostos: {}'.format(gasto_geral_com_impostos))
