@@ -25,6 +25,10 @@ setor_auxiliar = []
 aparelho_auxiliar = []
 # ______________________________________________________________________________________________________________________
 
+# ----------------------------------------------------------------------------------------------------------------------
+#                               Loop para contabiliar os dados de n setores
+# ______________________________________________________________________________________________________________________
+
 while mais_setores:
     # ------------------------------------------------------------------------------------------------------------------
     #                                 Loop para contabilizar todos os tipos de aparelho
@@ -48,45 +52,54 @@ while mais_setores:
             nome_do_aparelho = 'televisores'
         # ______________________________________________________________________________________________________________
 
+        # --------------------------------------------------------------------------------------------------------------
+        #                                          Recolhe dados do aparelho em contexto
+        # --------------------------------------------------------------------------------------------------------------
         numero_de_aparelhos = int(input(
             '\n\nQuantos {} existem no {}° setor: '.format(nome_do_aparelho, contador_de_setores)))
-        while contador_do_loop <= numero_de_aparelhos:
+        # while contador_do_loop <= numero_de_aparelhos:
+        if numero_de_aparelhos == 0:
+            consumo_do_aparelho = 0
+        else:
             potencia_do_aparelho = float(input('Digite a potẽncia do {}° aparelho: '.format(contador_do_loop)))
-            potencia_do_aparelho = potencia_do_aparelho/1000
+            potencia_do_aparelho = potencia_do_aparelho/1000  # Converte de w para KW
             horas_de_uso_por_dia_do_aparelho = float(
                 input('Digite a quantidade de horas por dia de uso do {}° aparelho: '.format(contador_do_loop)))
             dias_de_uso_do_aparelho_por_mes = float(
                 input('Digite a quantidade de dias por mês de uso do {}° aparelho; '.format(contador_do_loop)))
             consumo_do_aparelho = (
                 potencia_do_aparelho * horas_de_uso_por_dia_do_aparelho * dias_de_uso_do_aparelho_por_mes)
-            aparelho_auxiliar.append(consumo_do_aparelho)
-            consumo_do_setor = consumo_do_setor + consumo_do_aparelho  # ATENÇÂO
-            contador_do_loop = contador_do_loop + 1
+        aparelho_auxiliar.append(consumo_do_aparelho)
+        consumo_do_setor = consumo_do_setor + consumo_do_aparelho  # ATENÇÂO
+        # contador_do_loop = contador_do_loop + 1 ---Não é mais útil
         tipo_de_aparelho = tipo_de_aparelho + 1
         setor_auxiliar.append(deepcopy(aparelho_auxiliar))
-        aparelho_auxiliar[:] = []
-        contador_do_loop = 1  # Reseta o loop para uso com outro tipo de aparelho
+        aparelho_auxiliar[:] = []  # Limpa a lista auxiliar
+        # contador_do_loop = 1  # Reseta o loop para uso com outro tipo de aparelho  # Inútil
+        # ______________________________________________________________________________________________________________
     # __________________________________________________________________________________________________________________
 
     # ------------------------------------------------------------------------------------------------------------------
     #                                              Adiciona um novo setor
     # ------------------------------------------------------------------------------------------------------------------
     setores.append(deepcopy(setor_auxiliar))
-    setor_auxiliar[:] = []
+    setor_auxiliar[:] = []  # Limpa a lista auxiliar
     while adicionar_setor != 'A' and adicionar_setor != 'B':
         print('----------------------| Deseja adicionar mais um setor? |----------------------\n\n')
         print('[A] - Para adicionar outro setor à contagem')
-        print('[B] - Para afinalizar as contagens\n\n')
+        print('[B] - Para finalizar as contagens\n\n')
         adicionar_setor = input('Digite sua escolha: ')
-        if adicionar_setor == 'A':
+        if adicionar_setor == 'A' or adicionar_setor == 'a':
             contador_de_setores = contador_de_setores + 1
             tipo_de_aparelho = 0  # Permite ao programa executar novamente o primeiro laço de repetição
-        elif adicionar_setor == 'B':
+        elif adicionar_setor == 'B' or adicionar_setor == 'b':
             mais_setores = False
         else:
             print('Opção inválida, digite novamente!\n\n')
     adicionar_setor = 'x'  # Permite ao programa voltar a executar esse laço quando houver mais um setor
     # __________________________________________________________________________________________________________________
+
+# ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                      Definindo a taxa utilizada para os calculos
@@ -166,6 +179,7 @@ while contado_lista_1 < tamanho_lista_setores:
 
 gasto_geral_com_impostos = gasto_geral_sem_impostos + gasto_geral_sem_impostos * (27/100) + \
     gasto_geral_sem_impostos * (1.65/100) + gasto_geral_sem_impostos * (7.61/100)  # ICMS  PIS COFINS
+# ______________________________________________________________________________________________________________________
 
 print('\n\n\n\n\n\n')
 print('Consumo geral: {}'.format(consumo_geral))
