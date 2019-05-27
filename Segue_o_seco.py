@@ -1,32 +1,24 @@
 from copy import deepcopy
 
 # ----------------------------------------------------------------------------------------------------------------------
-#                                                 listando variavéis
+#                                      Inicializando variáveis necessárias
 # ----------------------------------------------------------------------------------------------------------------------
 tipo_de_aparelho = 0
-nome_do_aparelho = 'x'
-potencia_do_aparelho = 0.0
-horas_de_uso_por_dia_do_aparelho = 0.0
-dias_de_uso_do_aparelho_por_mes = 0.0
-consumo_do_aparelho = 0.0
-numero_de_aparelhos = 0
 contador_do_loop = 1
-outro_contador_de_loop = 0
+# outro_contador_de_loop = 0
 adicionar_setor = 'x'
+nome_do_aparelho = 'x'
 contador_de_setores = 1
-consumo_do_setor = 0
-consumo_geral = 0.0
-gasto_geral_sem_impostos = 0.0
-gasto_geral_com_impostos = 0.0
+consumo_do_setor = 0  # vai ser apagado
 mais_setores = True
-taxa = 0.0
 setores = []
 setor_auxiliar = []
 aparelho_auxiliar = []
+taxa = 0
 # ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
-#                               Loop para contabiliar os dados de n setores
+#                                   Loop para contabilizar os dados de n setores
 # ______________________________________________________________________________________________________________________
 
 while mais_setores:
@@ -84,7 +76,7 @@ while mais_setores:
     # ------------------------------------------------------------------------------------------------------------------
     setores.append(deepcopy(setor_auxiliar))
     setor_auxiliar[:] = []  # Limpa a lista auxiliar
-    while adicionar_setor != 'A' and adicionar_setor != 'B':
+    while adicionar_setor != 'A' and adicionar_setor != 'a' and adicionar_setor != 'B' and adicionar_setor != 'b':
         print('----------------------| Deseja adicionar mais um setor? |----------------------\n\n')
         print('[A] - Para adicionar outro setor à contagem')
         print('[B] - Para finalizar as contagens\n\n')
