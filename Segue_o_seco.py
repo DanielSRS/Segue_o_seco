@@ -109,7 +109,31 @@ while mais_setores:
 # ----------------------------------------------------------------------------------------------------------------------
 #                                              Realiza os calculos finais
 # ----------------------------------------------------------------------------------------------------------------------
+tamanho_lista = len(setores)  #verifica quantos setores foram inseridos
 
+for contador in range (tamanho_lista):  #Calcula o consumo em kwh em cada tipo de aparelho
+    print(setores[contador])
+    for contador_dois in range (5):  #esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
+        kwh_auxiliar = setores[contador][contador_dois][0] * (setores[contador][contador_dois][1]/1000) * setores[contador][contador_dois][2]  \
+            * setores[contador][contador_dois][3]
+        print('consumo aparelho')
+        print(kwh_auxiliar)
+        setores[contador][contador_dois].append(kwh_auxiliar)  # adiciona consumo do aparelho ao final de sua respectiva lista
+
+
+kw_setor = 0
+for contador in range (tamanho_lista):  # Calcula o consumo em kwh em cada  setor
+    for contador_dois in range (5):  # esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
+        kw_setor += setores[contador][contador_dois][4]
+    setores[contador].append(kw_setor )
+    kw_setor = 0
+    print(setores[contador][5])
+
+
+kw_total = 0
+for contador in range (tamanho_lista):  # Soma o consumo dos setores para encontrar o consumo total
+    kw_total += setores[contador][5]
+print('\n\n\nTotal de kwh: {}'.format(kw_total))
 # ______________________________________________________________________________________________________________________
 
 
