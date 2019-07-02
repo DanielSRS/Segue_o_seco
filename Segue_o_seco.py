@@ -7,7 +7,6 @@ tipo_de_aparelho = 0
 adicionar_setor = 'x'
 nome_do_aparelho = 'x'
 contador_de_setores = 1
-consumo_do_setor = 0  # vai ser apagado
 mais_setores = True
 setores = []
 setor_auxiliar = []
@@ -86,38 +85,17 @@ while mais_setores:
 # ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
-#                                      Definindo a taxa utilizada para os calculos
-# ----------------------------------------------------------------------------------------------------------------------
-#  if consumo_do_setor <= 50:  # Consumo em KW
-#    if consumo_do_setor < 31:
-#        taxa = 0.18842532
-#    else:
-#        taxa = 0.32301484
-#  elif 50 < consumo_do_setor <= 149.99:
-#    if 50 < consumo_do_setor < 101:
-#        taxa = 0.44187518
-#    else:
-#        taxa = 0.25776052
-#  elif consumo_do_setor >= 150:
-#    if consumo_do_setor > 220:
-#        taxa = 0.75879587
-#    if 149.99 < consumo_do_setor <= 220:
-#        taxa = 0.26557855
-# ______________________________________________________________________________________________________________________
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-#                                              Realiza os calculos finais
+#                                              Realiza os calculos de consumo (em KWh)
 # ----------------------------------------------------------------------------------------------------------------------
 tamanho_lista = len(setores)  #verifica quantos setores foram inseridos
 
 for contador in range (tamanho_lista):  #Calcula o consumo em kwh em cada tipo de aparelho
-    print(setores[contador])
+    # print(setores[contador])
     for contador_dois in range (5):  #esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
         kwh_auxiliar = setores[contador][contador_dois][0] * (setores[contador][contador_dois][1]/1000) * setores[contador][contador_dois][2]  \
             * setores[contador][contador_dois][3]
-        print('consumo aparelho')
-        print(kwh_auxiliar)
+        # print('consumo aparelho')
+        # print(kwh_auxiliar)
         setores[contador][contador_dois].append(kwh_auxiliar)  # adiciona consumo do aparelho ao final de sua respectiva lista
 
 
@@ -127,25 +105,46 @@ for contador in range (tamanho_lista):  # Calcula o consumo em kwh em cada  seto
         kw_setor += setores[contador][contador_dois][4]
     setores[contador].append(kw_setor )
     kw_setor = 0
-    print(setores[contador][5])
+    # print(setores[contador][5])
 
 
 kw_total = 0
 for contador in range (tamanho_lista):  # Soma o consumo dos setores para encontrar o consumo total
     kw_total += setores[contador][5]
-print('\n\n\nTotal de kwh: {}'.format(kw_total))
+setores.append(kw_total)
+# print('\n\n\nTotal de kwh: {}'.format(kw_total))
 # ______________________________________________________________________________________________________________________
 
+# ----------------------------------------------------------------------------------------------------------------------
+#                                    Definindo a taxa utilizada para os calculos de gastos
+# ----------------------------------------------------------------------------------------------------------------------
+  if setores[tamanho_lista] <= 50:  # Consumo em KW
+    if setores[tamanho_lista] < 31:
+        taxa = 0.18842532
+    else:
+        taxa = 0.32301484
+  elif 50 < setores[tamanho_lista] <= 149.99:
+    if 50 < setores[tamanho_lista] < 101:
+        taxa = 0.44187518
+    else:
+        taxa = 0.25776052
+  elif setores[tamanho_lista] >= 150:
+    if setores[tamanho_lista] > 220:
+        taxa = 0.75879587
+    if 149.99 < setores[tamanho_lista] <= 220:
+        taxa = 0.26557855
+# ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                          Exibição dos resultados finais
 # ----------------------------------------------------------------------------------------------------------------------
+for contador in range (tamanho_lista): 
+    print('{}° setor:'.format(contador + 1))
+    print('\tar condicionado: {} kwh'.format(setores[contador][0][4]))
+    print('\tcompputadores: {} kwh'.format(setores[contador][1][4]))
+    print('\tgeladeiras: {} kwh'.format(setores[contador][2][4]))
+    print('\tlampadas: {} kwh'.format(setores[contador][3][4]))
+    print('\ttelevisores: {} kwh \n'.format(setores[contador][4][4]))
 
-# ______________________________________________________________________________________________________________________
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-#                                                Calculo usando listas
-# ----------------------------------------------------------------------------------------------------------------------
-
+print('\n\n\nComsumo total em KWh: {}'.format(setores[tamanho_lista]))
 # ______________________________________________________________________________________________________________________
