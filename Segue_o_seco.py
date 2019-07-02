@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy  # N
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                      Inicializando variáveis necessárias
@@ -98,7 +98,6 @@ for contador in range (tamanho_lista):  #Calcula o consumo em kwh em cada tipo d
         # print(kwh_auxiliar)
         setores[contador][contador_dois].append(kwh_auxiliar)  # adiciona consumo do aparelho ao final de sua respectiva lista
 
-
 kw_setor = 0
 for contador in range (tamanho_lista):  # Calcula o consumo em kwh em cada  setor
     for contador_dois in range (5):  # esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
@@ -106,7 +105,6 @@ for contador in range (tamanho_lista):  # Calcula o consumo em kwh em cada  seto
     setores[contador].append(kw_setor )
     kw_setor = 0
     # print(setores[contador][5])
-
 
 kw_total = 0
 for contador in range (tamanho_lista):  # Soma o consumo dos setores para encontrar o consumo total
@@ -118,33 +116,50 @@ setores.append(kw_total)
 # ----------------------------------------------------------------------------------------------------------------------
 #                                    Definindo a taxa utilizada para os calculos de gastos
 # ----------------------------------------------------------------------------------------------------------------------
-  if setores[tamanho_lista] <= 50:  # Consumo em KW
-    if setores[tamanho_lista] < 31:
-        taxa = 0.18842532
-    else:
-        taxa = 0.32301484
-  elif 50 < setores[tamanho_lista] <= 149.99:
-    if 50 < setores[tamanho_lista] < 101:
-        taxa = 0.44187518
-    else:
-        taxa = 0.25776052
-  elif setores[tamanho_lista] >= 150:
-    if setores[tamanho_lista] > 220:
-        taxa = 0.75879587
-    if 149.99 < setores[tamanho_lista] <= 220:
-        taxa = 0.26557855
+if setores[tamanho_lista] < 31:  # Consumo em KW
+    taxa = 0.17512250
+elif 31 <= setores[tamanho_lista] <= 100:
+    taxa = 0.30021000
+elif 101 <= setores[tamanho_lista] >= 149.99:
+    taxa = 0.45031500
+else:
+    taxa = 0.50035000
+# ______________________________________________________________________________________________________________________
+
+# ----------------------------------------------------------------------------------------------------------------------
+#                                    Realiza os calculos de gastos (em R$)
+# ----------------------------------------------------------------------------------------------------------------------
+for contador in range (tamanho_lista):  #Calcula o consumo em kwh em cada tipo de aparelho
+    # print(setores[contador])
+    for contador_dois in range (5):  #esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
+        RS_auxiliar = setores[contador][contador_dois][4] * taxa  # calcula o valor gasto ppo cada parelho
+        setores[contador][contador_dois].append(RS_auxiliar)  # adiciona gasto do aparelho ao final de sua respectiva lista
+        print('Gasto do aparelho: {}'.format(RS_auxiliar))
+
+RS_setor = 0
+for contador in range (tamanho_lista):  # Calcula o gasto em R$ em cada  setor
+    for contador_dois in range (5):  # esse for esta na liista de um setor, cada setor tem 5 aparehos (cada aparelho e uma lista)
+        RS_setor += setores[contador][contador_dois][5]
+    setores[contador].append(RS_setor )
+    RS_setor = 0
+
+RS_total = 0
+for contador in range (tamanho_lista):  # Soma o gasto umo dos setores para encontrar o gasto total
+    RS_total += setores[contador][6]
+setores.append(RS_total)
+print('\n\nGasto total: {}'.format(RS_total))
 # ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                          Exibição dos resultados finais
 # ----------------------------------------------------------------------------------------------------------------------
-for contador in range (tamanho_lista): 
+for contador in range (tamanho_lista):
     print('{}° setor:'.format(contador + 1))
-    print('\tar condicionado: {} kwh'.format(setores[contador][0][4]))
-    print('\tcompputadores: {} kwh'.format(setores[contador][1][4]))
-    print('\tgeladeiras: {} kwh'.format(setores[contador][2][4]))
-    print('\tlampadas: {} kwh'.format(setores[contador][3][4]))
-    print('\ttelevisores: {} kwh \n'.format(setores[contador][4][4]))
+    print('\tar condicionado:   {} kwh'.format(setores[contador][0][4]))
+    print('\tcompputadores:     {} kwh'.format(setores[contador][1][4]))
+    print('\tgeladeiras:        {} kwh'.format(setores[contador][2][4]))
+    print('\tlampadas:          {} kwh'.format(setores[contador][3][4]))
+    print('\ttelevisores:       {} kwh \n'.format(setores[contador][4][4]))
 
 print('\n\n\nComsumo total em KWh: {}'.format(setores[tamanho_lista]))
 # ______________________________________________________________________________________________________________________
