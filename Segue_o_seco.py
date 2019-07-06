@@ -1,7 +1,7 @@
 # *******************************************************************************
-# Autor: Fulano de Tal
+# Autor: Daniel Santa Rosa Santos
 # Componente Curricular: Algoritmos I
-# Concluido em: 04/07/2019
+# Concluido em: 05/07/2019
 # Declaro que este código foi elaborado por mim de forma individual e não contém nenhum
 # trecho de código de outro colega ou de outro autor,tais como provindos de livros e
 # apostilas,e páginas ou documentos eletrônicos da Internet. Qualquer trecho de código
@@ -9,7 +9,7 @@
 # do código, e estou ciente que estes trechos não serão considerados para fins de avaliação.
 # ******************************************************************************************
 
-from copy import deepcopy  # N
+from copy import deepcopy
 
 # ----------------------------------------------------------------------------------------------------------------------
 #                                      Inicializando variáveis necessárias
@@ -70,13 +70,13 @@ while mais_setores:
 
             while True:  # tratando entradas invalidas
                 horas_de_uso_por_dia_do_aparelho = input('Digite a quantidade de horas de uso por dia do aparelho: ')
-                if horas_de_uso_por_dia_do_aparelho.isnumeric():
+                if horas_de_uso_por_dia_do_aparelho.isnumeric() and int(horas_de_uso_por_dia_do_aparelho) <= 24:
                     break
             aparelho_auxiliar.append(int(horas_de_uso_por_dia_do_aparelho))  # adiciona a lista
 
             while True:  # tratando entradas invalidas
                 dias_de_uso_do_aparelho_por_mes = input('Digite a quantidade de dias de uso por mês do aparelho: ')
-                if dias_de_uso_do_aparelho_por_mes.isnumeric():
+                if dias_de_uso_do_aparelho_por_mes.isnumeric() and int(dias_de_uso_do_aparelho_por_mes) <= 30:
                     break
             aparelho_auxiliar.append(int(dias_de_uso_do_aparelho_por_mes))  # adiciona a lista
         else:
@@ -173,6 +173,9 @@ for contador in range(tamanho_lista):  # Soma o gasto umo dos setores para encon
     RS_total += setores[contador][6]
 setores.append(RS_total)
 print('\n\nGasto total: {}'.format(RS_total))
+
+gasto = setores[tamanho_lista + 1] * 0.27 + setores[tamanho_lista + 1] * 0.0165 + (
+    setores[tamanho_lista + 1] * 0.0761) + setores[tamanho_lista + 1]  # calcula gasto com impostos
 # ______________________________________________________________________________________________________________________
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -181,16 +184,18 @@ print('\n\nGasto total: {}'.format(RS_total))
 for contador in range(tamanho_lista):
     print('{}° setor:'.format(contador + 1))
     print('\tar condicionado:   {} kwh'.format(setores[contador][0][4]))
-    print('\t                   R$ {}'.format(round(setores[contador][0][5]), 2))  # imprime o valor arredondad
+    print('\t                   R$ {}'.format(round(setores[contador][0][5], 2)))  # imprime o valor arredondado
     print('\tcompputadores:     {} kwh'.format(setores[contador][1][4]))
-    print('\t                   R$ {}'.format(round(setores[contador][1][5]), 2))  # imprime o valor arredondad
+    print('\t                   R$ {}'.format(round(setores[contador][1][5], 2)))  # imprime o valor arredondado
     print('\tgeladeiras:        {} kwh'.format(setores[contador][2][4]))
-    print('\t                   R$ {}'.format(round(setores[contador][2][5]), 2))  # imprime o valor arredondad
+    print('\t                   R$ {}'.format(round(setores[contador][2][5], 2)))  # imprime o valor arredondado
     print('\tlampadas:          {} kwh'.format(setores[contador][3][4]))
-    print('\t                   R$ {}'.format(round(setores[contador][3][5]), 2))  # imprime o valor arredondad
+    print('\t                   R$ {}'.format(round(setores[contador][3][5], 2)))  # imprime o valor arredondado
     print('\ttelevisores:       {} kwh'.format(setores[contador][4][4]))
-    print('\t                   R$ {}'.format(round((setores[contador][4][5]), 2)))  # imprime o valor arredondad
+    print('\t                   R$ {}'.format(round((setores[contador][4][5]), 2)))  # imprime o valor arredondado
 
 print('\n\n\nComsumo total em KWh: {}'.format(setores[tamanho_lista]))
-print('                 R$ {}'.format(round(setores[tamanho_lista + 1]), 2))
+print('Gasto total: R$ {}'.format(round(setores[tamanho_lista + 1], 2)))
+print('Valor da conta de luz: R$ {}'.format(round(gasto, 2)))
 # ______________________________________________________________________________________________________________________
+ 
